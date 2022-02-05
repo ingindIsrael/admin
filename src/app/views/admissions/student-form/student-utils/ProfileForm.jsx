@@ -21,7 +21,7 @@ export const ProfileForm = ({ initialValues }) => {
     const requestValues = cohort !== null
       ? { ...values, cohort: cohort.id, invite: true }
       : { ...values, invite: true };
-    // console.log("ESTE ES EL MAIL ####", values.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))
+    
     if (values.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) === null) {
       console.error("The email entered has formatting errors (insert a valid email address)")
       toast.error("The email entered has formatting errors (insert a valid email address)")
@@ -142,8 +142,9 @@ export const ProfileForm = ({ initialValues }) => {
                 label="Cohort"
                 required
                 getOptionLabel={(option) => `${option.name}, (${option.slug})`}
-                asyncSearch={() => axios.get(`${process.env.REACT_APP_API_HOST}/v1/admissions/academy/cohort`)}
+                asyncSearch={() => axios.get(`${process.env.REACT_APP_API_HOST}/v1/admissions/academy/cohort?stage=PREWORK,STARTED`)}
               />
+              <small>Only cohorts with stage PREWORK or STARTED will be shown here</small>
             </Grid>
           </Grid>
           <div className="mt-6">
